@@ -1,0 +1,11 @@
+=== Availability Log Summary ===
+Log File:         evidence/t6-monitor.log
+Start Timestamp:  2026-10-19T14:59:27.111933Z
+End Timestamp:    2026-10-19T15:05:17.016220Z
+Total Requests:   603
+Successful (OK):  603
+Failed (FAIL):    0
+
+=== Version Counts ===
+    603 "version": "1.0.0"
+================================

@@ -1,0 +1,7 @@
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE     CONTAINERS     IMAGES                        SELECTOR
+deployment.apps/notice-board   3/3     3            3           2m23s   notice-board   notice-board:02230128-1.0.0   app=notice-board
+
+NAME                                READY   STATUS    RESTARTS   AGE     IP           NODE                      NOMINATED NODE   READINESS GATES
+pod/notice-board-7c96dbdd6f-cpl74   1/1     Running   0          2m23s   10.244.2.2   cte412-02230128-worker2   <none>           <none>
+pod/notice-board-7c96dbdd6f-pxfkp   1/1     Running   0          2m23s   10.244.1.2   cte412-02230128-worker    <none>           <none>
+pod/notice-board-7c96dbdd6f-wmfnr   1/1     Running   0          2m23s   10.244.2.3   cte412-02230128-worker2   <none>           <none>

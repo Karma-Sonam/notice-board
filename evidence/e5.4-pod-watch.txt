@@ -1,0 +1,36 @@
+Name:               notice-board
+Namespace:          nb-02230128
+CreationTimestamp:  Mon, 19 Oct 2026 19:28:11 +0600
+Labels:             <none>
+Annotations:        deployment.kubernetes.io/revision: 3
+                    kubernetes.io/change-cause: Update to 1.1.0 using Recreate strategy
+Selector:           app=notice-board
+Replicas:           3 desired | 3 updated | 3 total | 3 available | 0 unavailable
+StrategyType:       Recreate
+MinReadySeconds:    0
+Pod Template:
+  Labels:  app=notice-board
+  Containers:
+   notice-board:
+    Image:         notice-board:02230128-1.0.0
+    Port:          8080/TCP
+    Host Port:     0/TCP
+    Liveness:      tcp-socket :8080 delay=10s timeout=1s period=10s #success=1 #failure=3
+    Readiness:     http-get http://:8080/healthz delay=2s timeout=1s period=5s #success=1 #failure=3
+    Environment:   <none>
+    Mounts:        <none>
+  Volumes:         <none>
+  Node-Selectors:  <none>
+  Tolerations:     <none>
+Conditions:
+  Type           Status  Reason  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  notice-board-5887b7d4cb (0/0 replicas created)
+NewReplicaSet:   notice-board-7c96dbdd6f (3/3 replicas created)
+Events:
+  Type    Reason             Age                From                   Message  ----    ------             ----               ----                   -------
+  Normal  ScalingReplicaSet  16m                deployment-controller  Scaled down replica set notice-board-7c96dbdd6f from 3 to 0
+  Normal  ScalingReplicaSet  16m                deployment-controller  Scaled up replica set notice-board-5887b7d4cb from 0 to 3
+  Normal  ScalingReplicaSet  16m                deployment-controller  Scaled down replica set notice-board-5887b7d4cb from 3 to 0
+  Normal  ScalingReplicaSet  15m (x2 over 70m)  deployment-controller  Scaled up replica set notice-board-7c96dbdd6f from 0 to 3

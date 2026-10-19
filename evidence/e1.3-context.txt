@@ -1,0 +1,19 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: DATA+OMITTED
+    server: https://127.0.0.1:60772
+  name: kind-cte412-02230128
+contexts:
+- context:
+    cluster: kind-cte412-02230128
+    namespace: nb-02230128
+    user: kind-cte412-02230128
+  name: kind-cte412-02230128
+current-context: kind-cte412-02230128
+kind: Config
+users:
+- name: kind-cte412-02230128
+  user:
+    client-certificate-data: DATA+OMITTED
+    client-key-data: DATA+OMITTED

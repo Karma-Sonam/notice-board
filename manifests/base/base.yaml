@@ -1,0 +1,40 @@
+# File purpose: Defines namespace nb-02230128, ResourceQuota, and LimitRange with justified defaults.
+# Apply command: kubectl apply -f manifests/base/base.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nb-02230128  
+  labels:
+    app.kubernetes.io/part-of: campus-notice-board
+    cte412/practical: "06"
+  annotations:
+    owner: "Karma Sonam"  
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: nb-quota
+  namespace: nb-02230128
+spec:
+  hard:
+    requests.cpu: "1"        # Maximum total CPU requests allowed across all pods in namespace
+    requests.memory: "1Gi"   # Maximum total memory requests allowed across all pods in namespace
+    limits.cpu: "2"          # Maximum total CPU limits allowed to prevent resource exhaustion
+    limits.memory: "2Gi"     # Maximum total memory limits allowed for safety headroom
+    pods: "15"               # Maximum concurrent pods limit to fit within local kind resources
+    count/services: "4"      # Restricts service objects to match architecture needs (ClusterIP + NodePort)
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: nb-limits
+  namespace: nb-02230128
+spec:
+  limits:
+    - default:
+        cpu: "200m"          # Default CPU limit assigned to containers if omitted
+        memory: "256Mi"      # Default memory limit assigned to containers if omitted
+      defaultRequest:
+        cpu: "100m"          # Default CPU request assigned to containers for scheduling schedulability
+        memory: "128Mi"      # Default memory request assigned to containers matching lightweight alpine app profile
+      type: Container

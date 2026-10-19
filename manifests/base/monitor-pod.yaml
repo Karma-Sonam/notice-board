@@ -1,0 +1,34 @@
+# File purpose: Runs a continuous availability monitor Pod querying http://notice-board/version every 0.5s.
+# Apply command: kubectl apply -f manifests/base/monitor-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: availability-monitor
+  namespace: nb-02230128
+  labels:
+    app.kubernetes.io/name: availability-monitor
+spec:
+  restartPolicy: Never
+  containers:
+    - name: monitor
+      image: python:3.11-alpine  # Alpine-based Python container for reliable ISO timestamp formatting and curl
+      imagePullPolicy: IfNotPresent
+      command:
+        - /bin/sh
+        - -c
+        - |
+          apk add --no-cache curl > /dev/null 2>&1
+          while true; do
+            TIMESTAMP=$(python3 -c "import datetime; print(datetime.datetime.utcnow().isoformat() + 'Z')")
+            # Query internal ClusterIP service http://notice-board/version
+            RESPONSE=$(curl -s -w "HTTPSTATUS:%{http_code}" http://notice-board/version)
+            HTTP_CODE=$(echo "$RESPONSE" | tr -d '\n' | sed -E 's/.*HTTPSTATUS:([0-9]{3})$/\1/')
+            BODY=$(echo "$RESPONSE" | sed -E 's/HTTPSTATUS:[0-9]{3}$//')
+            
+            if [ "$HTTP_CODE" = "200" ]; then
+              echo "$TIMESTAMP OK $BODY"
+            else
+              echo "$TIMESTAMP FAIL STATUS=$HTTP_CODE BODY=$BODY"
+            fi
+            sleep 0.5
+          done

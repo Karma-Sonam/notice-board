@@ -1,0 +1,34 @@
+# File purpose: Deploys the Blue slot running version 1.0.0.
+# Apply command: kubectl apply -f manifests/bluegreen/blue-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notice-board-blue
+  namespace: nb-02230128
+  labels:
+    app.kubernetes.io/name: notice-board
+    slot: blue
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: notice-board
+      slot: blue
+  template:
+    metadata:
+      labels:
+        app: notice-board
+        slot: blue
+    spec:
+      containers:
+        - name: notice-board
+          image: notice-board:02230128-1.0.0
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 2
+            periodSeconds: 5

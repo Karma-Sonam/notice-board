@@ -1,0 +1,14 @@
+# File purpose: Defines a Kind cluster with 1 control plane and 2 worker nodes, mapping NodePort 30090.
+# Apply command: kind create cluster --config cluster/kind-cluster.yaml
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: cte412-02230128
+nodes:
+  - role: control-plane
+  - role: worker
+  - role: worker
+    extraPortMappings:
+      - containerPort: 30090
+        hostPort: 30090
+        listenAddress: "127.0.0.1"
+        protocol: TCP

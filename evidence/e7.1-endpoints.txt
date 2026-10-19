@@ -1,0 +1,2 @@
+NAME           ENDPOINTS                           AGE
+notice-board   10.244.1.11:8080,10.244.2.12:8080   4m40s

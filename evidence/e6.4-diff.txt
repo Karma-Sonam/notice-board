@@ -1,0 +1,32 @@
+diff -u -N "C:\\Users\\ASUS\\AppData\\Local\\Temp\\LIVE-3645573670/apps.v1.Deployment.nb-02230128.notice-board" "C:\\Users\\ASUS\\AppData\\Local\\Temp\\MERGED-1975323804/apps.v1.Deployment.nb-02230128.notice-board"
+--- "C:\\Users\\ASUS\\AppData\\Local\\Temp\\LIVE-3645573670/apps.v1.Deployment.nb-02230128.notice-board"	2026-10-19 21:05:24.502198200 +0600
++++ "C:\\Users\\ASUS\\AppData\\Local\\Temp\\MERGED-1975323804/apps.v1.Deployment.nb-02230128.notice-board"	2026-10-19 21:05:24.502750700 +0600
+@@ -5,16 +5,16 @@
+     deployment.kubernetes.io/revision: "5"
+     kubectl.kubernetes.io/last-applied-configuration: |
+       {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"kubernetes.io/change-cause":"Release 1.2.0-broken to test failed rollout and rollback"},"name":"notice-board","namespace":"nb-02230128"},"spec":{"minReadySeconds":5,"progressDeadlineSeconds":60,"replicas":3,"selector":{"matchLabels":{"app":"notice-board"}},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0},"type":"RollingUpdate"},"template":{"metadata":{"labels":{"app":"notice-board"}},"spec":{"containers":[{"image":"notice-board:02230128-1.2.0-broken","imagePullPolicy":"Never","livenessProbe":{"initialDelaySeconds":10,"periodSeconds":10,"tcpSocket":{"port":8080}},"name":"notice-board","ports":[{"containerPort":8080}],"readinessProbe":{"httpGet":{"path":"/healthz","port":8080},"initialDelaySeconds":2,"periodSeconds":5}}]}}}}
+-    kubernetes.io/change-cause: Update to 1.1.0 using Recreate strategy
++    kubernetes.io/change-cause: Update to 1.1.0 using RollingUpdate strategy
+   creationTimestamp: "2026-10-19T13:28:11Z"
+-  generation: 5
++  generation: 6
+   name: notice-board
+   namespace: nb-02230128
+   resourceVersion: "18173"
+   uid: 6ff9ac45-e740-4167-8330-7c56d658e443
+ spec:
+   minReadySeconds: 5
+-  progressDeadlineSeconds: 60
++  progressDeadlineSeconds: 600
+   replicas: 3
+   revisionHistoryLimit: 10
+   selector:
+@@ -31,7 +31,7 @@
+         app: notice-board
+     spec:
+       containers:
+-      - image: notice-board:02230128-1.0.0
++      - image: notice-board:02230128-1.1.0
+         imagePullPolicy: Never
+         livenessProbe:
+           failureThreshold: 3

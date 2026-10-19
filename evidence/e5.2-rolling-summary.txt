@@ -1,0 +1,11 @@
+=== Availability Log Summary ===
+Log File:         evidence/e5.2-rolling-log.txt
+Start Timestamp:  2026-10-19T14:15:04.122256Z
+End Timestamp:    2026-10-19T14:37:58.633588Z
+Total Requests:   2066
+Successful (OK):  2064
+Failed (FAIL):    2
+
+=== Version Counts ===
+   2065 "version": "1.0.0"
+================================

@@ -1,0 +1,5 @@
+NAME                            READY   STATUS    RESTARTS   AGE     IP            NODE                      NOMINATED NODE   READINESS GATES
+availability-monitor            1/1     Running   0          8m16s   10.244.1.7    cte412-02230128-worker    <none>           <none>
+notice-board-7c96dbdd6f-2v524   1/1     Running   0          95s     10.244.1.9    cte412-02230128-worker    <none>           <none>
+notice-board-7c96dbdd6f-ch57t   1/1     Running   0          79s     10.244.2.11   cte412-02230128-worker2   <none>           <none>
+notice-board-7c96dbdd6f-j6kl2   1/1     Running   0          112s    10.244.2.10   cte412-02230128-worker2   <none>           <none>

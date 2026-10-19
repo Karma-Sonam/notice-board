@@ -1,0 +1,38 @@
+# File purpose: Deploys version 1.1.0 using the Recreate strategy (downtime expected).
+# Apply command: kubectl apply -f manifests/rolling/task5-recreate.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notice-board
+  namespace: nb-02230128
+  annotations:
+    kubernetes.io/change-cause: "Update to 1.1.0 using Recreate strategy"
+spec:
+  replicas: 3
+  strategy:
+    type: Recreate               # Terminates all existing pods before spinning up new ones
+  selector:
+    matchLabels:
+      app: notice-board
+  template:
+    metadata:
+      labels:
+        app: notice-board
+    spec:
+      containers:
+        - name: notice-board
+          image: notice-board:02230128-1.1.0
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10

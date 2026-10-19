@@ -1,0 +1,11 @@
+=== Availability Log Summary ===
+Log File:         evidence/e4.1-at-rest-log.txt
+Start Timestamp:  2026-10-19T14:06:20.625323Z
+End Timestamp:    2026-10-19T14:07:29.923491Z
+Total Requests:   114
+Successful (OK):  114
+Failed (FAIL):    0
+
+=== Version Counts ===
+    114 "version": "1.0.0"
+================================

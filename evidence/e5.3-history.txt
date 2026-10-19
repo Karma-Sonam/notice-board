@@ -1,0 +1,5 @@
+deployment.apps/notice-board 
+REVISION  CHANGE-CAUSE
+2         Update to 1.1.0 using Recreate strategy
+3         Update to 1.1.0 using Recreate strategy
+

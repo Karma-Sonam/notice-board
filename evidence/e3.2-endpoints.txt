@@ -1,0 +1,7 @@
+NAME                       TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+service/notice-board       ClusterIP   10.96.125.230   <none>        80/TCP         6m50s
+service/notice-board-ext   NodePort    10.96.128.139   <none>        80:30090/TCP   6m50s
+
+NAME                         ENDPOINTS                                         AGE
+endpoints/notice-board       10.244.1.2:8080,10.244.2.2:8080,10.244.2.3:8080   6m50s
+endpoints/notice-board-ext   10.244.1.2:8080,10.244.2.2:8080,10.244.2.3:8080   6m50s

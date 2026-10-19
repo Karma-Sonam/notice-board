@@ -1,0 +1,21 @@
+NAME                                      READY   STATUS      RESTARTS   AGE
+pod/availability-monitor                  1/1     Running     0          30m
+pod/curler                                0/1     Completed   0          27m
+pod/notice-board-blue-5cf7fc9bb8-7qxsw    1/1     Running     0          32m
+pod/notice-board-blue-5cf7fc9bb8-8v459    1/1     Running     0          32m
+pod/notice-board-green-565f675f55-2wt6q   1/1     Running     0          13m
+pod/notice-board-green-565f675f55-srnl9   1/1     Running     0          13m
+
+NAME                           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+service/notice-board           ClusterIP   10.96.242.108   <none>        80/TCP    32m
+service/notice-board-preview   ClusterIP   10.96.98.184    <none>        80/TCP    32m
+
+NAME                                 READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/notice-board-blue    2/2     2            2           32m
+deployment.apps/notice-board-green   2/2     2            2           32m
+
+NAME                                            DESIRED   CURRENT   READY   AGE
+replicaset.apps/notice-board-blue-5cf7fc9bb8    2         2         2       32m
+replicaset.apps/notice-board-green-565f675f55   2         2         2       13m
+replicaset.apps/notice-board-green-6977775f8f   0         0         0       16m
+replicaset.apps/notice-board-green-798d8d9fdd   0         0         0       32m

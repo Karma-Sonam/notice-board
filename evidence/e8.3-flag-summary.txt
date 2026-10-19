@@ -1,0 +1,10 @@
+=== Availability Log Summary ===
+Log File:         evidence/e7.3-switch-log.txt
+Start Timestamp:  /bin/sh:
+End Timestamp:    2026-10-19T15:22:08.608163Z
+Total Requests:   478
+Successful (OK):  0
+Failed (FAIL):    239
+
+=== Version Counts ===
+================================

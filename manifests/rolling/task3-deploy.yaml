@@ -1,0 +1,66 @@
+# File purpose: Deploys 3 replicas of notice-board:02230128-1.0.0 with probes and exposes via ClusterIP and NodePort.
+# Apply command: kubectl apply -f manifests/rolling/task3-deploy.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notice-board
+  namespace: nb-02230128
+  labels:
+    app.kubernetes.io/name: notice-board
+    app.kubernetes.io/version: "1.0.0"
+spec:
+  replicas: 3                    # Runs 3 concurrent pod replicas for high availability
+  selector:
+    matchLabels:
+      app: notice-board
+  template:
+    metadata:
+      labels:
+        app: notice-board
+    spec:
+      containers:
+        - name: notice-board
+          image: notice-board:02230128-1.0.0
+          imagePullPolicy: Never # Uses locally loaded Kind image without external registry pulls
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          livenessProbe:
+            tcpSocket:
+              port: 8080         # Uses TCP socket check instead of /healthz to satisfy rule requirements
+            initialDelaySeconds: 10
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notice-board
+  namespace: nb-02230128
+spec:
+  type: ClusterIP                # Internal cluster routing service for the monitor script
+  selector:
+    app: notice-board
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notice-board-ext
+  namespace: nb-02230128
+spec:
+  type: NodePort                 # External routing service binding to host port 30090
+  selector:
+    app: notice-board
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+      nodePort: 30090            # Explicitly maps to port 30090 configured in Kind config

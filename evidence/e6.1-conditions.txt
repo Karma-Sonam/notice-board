@@ -1,0 +1,2 @@
+Available	True	MinimumReplicasAvailable	Deployment has minimum availability.
+Progressing	True	NewReplicaSetAvailable	ReplicaSet "notice-board-7c96dbdd6f" has successfully progressed.

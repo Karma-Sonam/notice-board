@@ -1,0 +1,43 @@
+# File purpose: Deploys the broken image 1.2.0-broken with a 60s progress deadline to test rollout failure handling.
+# Apply command: kubectl apply -f manifests/rolling/task6-broken.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notice-board
+  namespace: nb-02230128
+  annotations:
+    kubernetes.io/change-cause: "Release 1.2.0-broken to test failed rollout and rollback"
+spec:
+  replicas: 3
+  progressDeadlineSeconds: 60    # Marks rollout as failed if it makes no progress for 60 seconds
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0          # Ensures zero downtime (old pods continue serving while new ones fail probes)
+      maxSurge: 1
+  minReadySeconds: 5
+  selector:
+    matchLabels:
+      app: notice-board
+  template:
+    metadata:
+      labels:
+        app: notice-board
+    spec:
+      containers:
+        - name: notice-board
+          image: notice-board:02230128-1.2.0-broken
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10

@@ -1,0 +1,42 @@
+# File purpose: Deploys version 1.1.0 using RollingUpdate strategy with zero unavailable pods.
+# Apply command: kubectl apply -f manifests/rolling/task5-rolling.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notice-board
+  namespace: nb-02230128
+  annotations:
+    kubernetes.io/change-cause: "Update to 1.1.0 using RollingUpdate strategy"
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0          # Ensures zero downtime by not taking down old pods until new ones are ready
+      maxSurge: 1                # Allows 1 extra pod above desired replica count during rollout
+  minReadySeconds: 5             # Waits 5 seconds before considering a new pod ready
+  selector:
+    matchLabels:
+      app: notice-board
+  template:
+    metadata:
+      labels:
+        app: notice-board
+    spec:
+      containers:
+        - name: notice-board
+          image: notice-board:02230128-1.1.0
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
